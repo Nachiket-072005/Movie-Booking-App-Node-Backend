@@ -4,12 +4,15 @@ const dotenv = require("dotenv");
 dotenv.config();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const Movie = require("./models/movie.model");
+
+const MovieRoutes = require("./routes/movie.routes");
 const app = express();
 
 // configuring body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+MovieRoutes(app);
 
 app.get("/", (req, res) => {
   res.send("Hello World");
@@ -24,17 +27,17 @@ app.listen(process.env.PORT, async () => {
     });
     console.log("Connected to MongoDB");
 
-    await Movie.create({
-      name: "Inception",
-      description: "A mind-bending thriller",
-      casts: ["Leonardo DiCaprio", "Joseph Gordon-Levitt"],
-      trailerUrls: ["https://example.com/trailer1"],
-      language: "English",
-      releaseDate: "2010-07-16",
-      director: "Christopher Nolan",
-      releaseStatus: "Released",
-    });
-    console.log("Sample movie created");
+    // await Movie.create({
+    //   name: "Inception",
+    //   description: "A mind-bending thriller",
+    //   casts: ["Leonardo DiCaprio", "Joseph Gordon-Levitt"],
+    //   trailerUrls: ["https://example.com/trailer1"],
+    //   language: "English",
+    //   releaseDate: "2010-07-16",
+    //   director: "Christopher Nolan",
+    //   releaseStatus: "Released",
+    // });
+    // console.log("Sample movie created");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
   }
